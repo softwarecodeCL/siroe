@@ -1,0 +1,14 @@
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+.toolbar-custom
+{
+  background-color: #3f51b5af;
+  color: white;
+}
+
+
+.example-icon {
+  color: white;
+}

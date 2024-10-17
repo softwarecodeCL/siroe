@@ -1,0 +1,113 @@
+<div fxLayout="row" fxLayoutAlign="center center">
+  <div fxFlex="100" fxFlex.gt-sm="60" fxFlex.lt-sm="90">
+    <mat-card appearance="outlined" style="margin-top: 30px;">
+      <mat-card-header class="header">
+        <mat-card-title>Sistema de envios</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-card class="alert alert-warning" role="alert" *ngIf="errorMessage">
+          {{ errorMessage }}
+        </mat-card>
+        <div class="example-container">
+          <form [formGroup]="options">
+            <div fxFlex="100">
+              <div fxLayout="row" fxLayoutGap="20px">
+                <div fxFlex="50">
+                  <mat-form-field floatLabel="always">
+                    <mat-label>Nombre</mat-label>
+                    <input matInput placeholder="" formControlName="name" />
+                  </mat-form-field>
+                </div>
+              </div>
+              <div fxLayout="row">
+                <span>Ingrese información en centímetros</span>
+              </div>
+              <div fxLayout="row" fxLayoutGap="20px">
+                <div fxFlex="33">
+                  <mat-form-field floatLabel="always">
+                    <mat-label>Alto</mat-label>
+                    <input type="number" min="0" (input)="validateNumber($event)" matInput placeholder=""
+                      formControlName="height" />
+                  </mat-form-field>
+                </div>
+                <div fxFlex="33">
+                  <mat-form-field floatLabel="always">
+                    <mat-label>Ancho</mat-label>
+                    <input min="0" (input)="validateNumber($event)" matInput placeholder="" formControlName="width" />
+                  </mat-form-field>
+                </div>
+                <div fxFlex="33">
+                  <mat-form-field floatLabel="always">
+                    <mat-label>Largo</mat-label>
+                    <input min="0" (input)="validateNumber($event)" matInput placeholder="" formControlName="long" />
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </form>
+          <div>
+            <strong>Dimensión: {{ Totalvolume }} m³</strong>
+            <br />
+            <strong>Valor: {{ cost }} CLP</strong>
+          </div>
+
+          <div fxLayout="row" fxLayoutAlign="end center" style="margin-top: 20px;">
+            <button mat-flat-button [disabled]="saveDisabled" (click)="save()">Guardar</button>
+          </div>
+
+          <!-- dataTable start -->
+          <div *ngIf="dataSource.data.length > 0" style="margin-top: 20px;">
+            <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" style="width: 100%;">
+
+              <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</th>
+                <td mat-cell *matCellDef="let element">{{element.name}}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="height">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Alto (cm)</th>
+                <td mat-cell *matCellDef="let element">{{element.height}}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="width">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Ancho (cm)</th>
+                <td mat-cell *matCellDef="let element">{{element.width}}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="long">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Largo (cm)</th>
+                <td mat-cell *matCellDef="let element">{{element.long}}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="cost">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Costo (CLP)</th>
+                <td mat-cell *matCellDef="let element">{{element.cost}}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="volume">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Volumen</th>
+                <td mat-cell *matCellDef="let element">{{element.volume}}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="date">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Fecha</th>
+                <td mat-cell *matCellDef="let element">{{element.date}}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef>Acciones</th>
+                <td mat-cell *matCellDef="let element">
+                  <button mat-button color="warn" (click)="delete(element)">Eliminar</button>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+          </div>
+          <!-- dataTable End -->
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
